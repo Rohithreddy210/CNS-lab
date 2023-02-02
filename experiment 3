@@ -1,0 +1,61 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <ctype.h> 
+#include <stdlib.h> 
+  
+int main() 
+{ 
+    int i, j, k, l, m, n; 
+    char key[10], message[100], matrix[5][5]; 
+  
+    // Ask for a keyword 
+    printf("Enter the keyword: "); 
+    scanf("%s", key); 
+  
+    // Generate the Playfair matrix 
+    for (i = 0, k = 0; i < 5; i++) 
+        for (j = 0; j < 5; j++) 
+            if (k < strlen(key)) 
+                matrix[i][j] = toupper(key[k++]); 
+            else
+                matrix[i][j] = 'A' + n++; 
+  
+    // Ask for a message 
+    printf("Enter the message: "); 
+    scanf("%s", message); 
+  
+    // Generate the cipher 
+    for (i = 0, k = 0; i < strlen(message); i += 2, k += 2) { 
+        // Get the positions of the two characters 
+        for (j = 0; j < 5; j++) 
+            for (l = 0; l < 5; l++) { 
+                if (message[i] == matrix[j][l]) { 
+                    m = j; 
+                    n = l; 
+                } 
+                if (message[i + 1] == matrix[j][l]) { 
+                    j = m; 
+                    l = n; 
+                } 
+            } 
+  
+        // Encrypt the message 
+        if (m == j) { 
+            message[k] = matrix[m][(n + 1) % 5]; 
+            message[k + 1] = matrix[j][(l + 1) % 5]; 
+        } 
+        else if (n == l) { 
+            message[k] = matrix[(m + 1) % 5][n]; 
+            message[k + 1] = matrix[(j + 1) % 5][l]; 
+        } 
+        else { 
+            message[k] = matrix[m][l]; 
+            message[k + 1] = matrix[j][n]; 
+        } 
+    } 
+  
+    // Print the cipher 
+    printf("Cipher: %s\n", message); 
+  
+    return 0; 
+}
