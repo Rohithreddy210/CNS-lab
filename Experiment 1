@@ -1,0 +1,38 @@
+#include<stdio.h> 
+#include<string.h> 
+#include<stdlib.h> 
+
+//Function to encrypt the string 
+void encrypt(char *message, int k) 
+{ 
+	//k is the key 
+	int i; 
+	for (i = 0; *(message + i); ++i) { 
+		*(message + i) = (*(message + i) + k - 'a') % 26 + 'a'; 
+	} 
+} 
+
+//Function to decrypt the string 
+void decrypt(char *message, int k) 
+{ 
+	int i; 
+	for (i = 0; *(message + i); ++i) { 
+		*(message + i) = (*(message + i) - k - 'a' + 26) % 26 + 'a'; 
+	} 
+} 
+
+//Driver program 
+int main() 
+{ 
+	char message[100]; 
+	int k; 
+	printf("Enter a message to encrypt: "); 
+	scanf("%[^\n]s", message); 
+	printf("Enter the key: "); 
+	scanf("%d", &k); 
+	encrypt(message, k); 
+	printf("Encrypted message: %s\n", message); 
+	decrypt(message, k); 
+	printf("Decrypted message: %s\n", message); 
+	return 0; 
+}
