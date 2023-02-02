@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_SIZE 100
+
+//Function to encrypt plaintext using Polyalphabetic Substitution cipher
+void PolyAlphabeticEncrypt(char plain[], char key[])
+{
+    int i, j, plainlen, keylen;
+    char newkey[MAX_SIZE], encrypted[MAX_SIZE];
+
+    //Calculating length of plain text
+    plainlen = strlen(plain);
+
+    //Calculating length of key
+    keylen = strlen(key);
+
+    //Copying the plain text to encrypted text
+    strcpy(encrypted, plain);
+
+    //Generating new key
+    for(i = 0; i < plainlen; i++)
+    {
+        newkey[i] = key[i % keylen];
+    }
+
+    newkey[i] = '\0';
+
+    //Encrypting the plain text
+    for(i = 0, j = 0; i < plainlen; i++, j++)
+    {
+        encrypted[i] = ((plain[i] + newkey[j]) % 26) + 'A';
+    }
+
+    encrypted[i] = '\0';
+
+    //Displaying the encrypted text
+    printf("\nEncrypted Text: %s\n", encrypted);
+}
+
+//Function to decrypt ciphertext using Polyalphabetic Substitution cipher
+void PolyAlphabeticDecrypt(char encrypted[], char key[])
+{
+    int i, j, encryptedlen, keylen;
+    char newkey[MAX_SIZE], decrypted[MAX_SIZE];
+
+    //Calculating length of plain text
+    encryptedlen = strlen(encrypted);
+
+    //Calculating length of key
+    keylen = strlen(key);
+
+    //Copying the plain text to encrypted text
+    strcpy(decrypted, encrypted);
+
+    //Generating new key
+    for(i = 0; i < encryptedlen; i++)
+    {
+        newkey[i] = key[i % keylen];
+    }
+
+    newkey[i] = '\0';
+
+    //Decrypting the plain text
+    for(i = 0, j = 0; i < encryptedlen; i++, j++)
+    {
+        decrypted[i] = (((encrypted[i] - newkey[j]) + 26) % 26) + 'A';
+    }
+
+    decrypted[i] = '\0';
+
+    //Displaying the decrypted text
+    printf("\nDecrypted Text: %s\n", decrypted);
+}
+
+int main()
+{
+    char plain[MAX_SIZE], key[MAX_SIZE], encrypted[MAX_SIZE], decrypted[MAX_SIZE];
+
+    printf("Enter the plain text: ");
+    gets(plain);
+
+    printf("\nEnter the key: ");
+    gets(key);
+
+    //Calling the encryption function
+    PolyAlphabeticEncrypt(plain, key);
+
+
+
+    return 0;
+}
